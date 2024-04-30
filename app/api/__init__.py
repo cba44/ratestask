@@ -1,0 +1,1 @@
+from app.api.rates import blp as RatesBlueprint
