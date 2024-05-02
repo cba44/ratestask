@@ -1,0 +1,1 @@
+from app.service.rates_service import RatesService
