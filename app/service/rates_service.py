@@ -3,9 +3,16 @@ from app.db.rates import RatesDb
 class RatesService:
 
     def get_prices(date_from, date_to, origin, destination):
+        price_list = []
         origin_ports = RatesService.get_ports(origin)
         destination_ports = RatesService.get_ports(destination)
-        return origin_ports
+        prices = RatesDb.get_prices(date_from, date_to, origin_ports, destination_ports)
+        for price in prices:
+            price_list.append({
+                "day": price[0].strftime("%Y-%m-%d"),
+                "average_price": price[1]
+            })
+        return price_list
     
     def get_ports(location):
         ports = []

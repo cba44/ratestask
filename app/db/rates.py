@@ -36,5 +36,14 @@ class RatesDb:
         conn.close()
         return ports_tuple
 
-    def get_prices():
-        pass
+    def get_prices(date_from, date_to, origin_ports, destination_ports):
+        conn = Utils.get_db_connection()
+        cur = conn.cursor()
+        cur.execute(RatesQuery.prices_query, {'orig_codes': origin_ports,
+                                              'dest_codes': destination_ports,
+                                              'start_day': date_from,
+                                              'end_day': date_to})
+        prices = cur.fetchall()
+        cur.close()
+        conn.close()
+        return prices

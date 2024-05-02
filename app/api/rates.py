@@ -15,5 +15,4 @@ class Rates(MethodView):
         origin = request.args.get("origin")
         destination = request.args.get("destination")
         prices = RatesService.get_prices(date_from, date_to, origin, destination)
-        # return [date_from, date_to, origin, destination]
-        return "Rates"
+        return prices
