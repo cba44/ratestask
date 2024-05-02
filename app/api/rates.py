@@ -19,7 +19,9 @@ class Rates(MethodView):
         destination = args.get("destination")
         try:
             prices = RatesService.get_prices(date_from, date_to, origin, destination)
-        except:
-            abort(500, message="An error occurred while getting prices.")
+        except ValueError as err:
+            abort(400, message=str(err))
+        except Exception as err:
+            abort(500, message=str(err))
         
         return prices

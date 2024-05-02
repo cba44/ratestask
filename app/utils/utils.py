@@ -8,8 +8,12 @@ class Utils:
         db_user = os.getenv('DB_USER') or 'postgres'
         db_password = os.getenv('DB_PASSWORD') or 'ratestask'
 
-        conn = psycopg2.connect(host = db_host,
-                                database = db_database,
-                                user = db_user,
-                                password = db_password)
+        try:
+            conn = psycopg2.connect(host = db_host,
+                                    database = db_database,
+                                    user = db_user,
+                                    password = db_password)
+        except:
+            raise Exception("Error connecting to database")
+        print("conn", conn)
         return conn
