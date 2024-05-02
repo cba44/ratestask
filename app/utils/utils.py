@@ -8,8 +8,6 @@ class Utils:
         db_user = os.getenv('DB_USER') or 'postgres'
         db_password = os.getenv('DB_PASSWORD') or 'ratestask'
 
-        print(db_host, db_database, db_user, db_password)
-
         conn = psycopg2.connect(host = db_host,
                                 database = db_database,
                                 user = db_user,
