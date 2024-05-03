@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:12
+    restart: always
+    container_name: postgres
+    environment:
+      POSTGRES_PASSWORD: ratestask
+    volumes:
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d/
+    networks:
+      - ratestask_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  ratestask_api:
+    build: .
+    restart: on-failure
+    ports:
+      - 80:80
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - ratestask_network
+    environment:
+      - DB_HOST=postgres
+      - DB_DATABASE=postgres
+      - DB_USER=postgres
+      - DB_PASSWORD=ratestask
+
+networks:
+  ratestask_network:
+    name: ratestask_network
