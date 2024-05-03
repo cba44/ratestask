@@ -1,5 +1,6 @@
 class RatesQuery:
 
+    # Recursive query to get all subregions of a given region
     subregion_query = '''
                 WITH RECURSIVE subregions AS (
                 SELECT slug 
@@ -17,6 +18,9 @@ class RatesQuery:
 
     subregion_ports_query = 'SELECT code FROM ports WHERE parent_slug IN %(region)s'
 
+    # Getting all prices for a day between ports/regions
+    # Then the result is joined with a date range betweeen given dates
+    # Result will give the null value when there is less than 3 price values for a day
     prices_query = '''
                 select d.day, p.average_price from
                 (SELECT day, ROUND(AVG(price)) as average_price

@@ -3,6 +3,7 @@ from app.db.query import RatesQuery
 
 class RatesDb:
 
+    # Getting tuple of all subregions for a given region
     def get_all_subregions(slug, location_name):
         conn = Utils.get_db_connection()
         cur = conn.cursor()
@@ -33,7 +34,7 @@ class RatesDb:
             cur.close()
             conn.close()
         
-    
+    # Getting all ports for all subregions of a given region
     def get_all_ports(subregions, location_name):
         conn = Utils.get_db_connection()
         cur = conn.cursor()
@@ -50,7 +51,7 @@ class RatesDb:
             cur.close()
             conn.close()
         
-
+    # Getting date and prices for API query
     def get_prices(date_from, date_to, origin_ports, destination_ports):
         conn = Utils.get_db_connection()
         cur = conn.cursor()
